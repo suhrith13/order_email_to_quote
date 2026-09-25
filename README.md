@@ -43,18 +43,3 @@ Maps to Unilog's own example: *"an emailed order becomes a priced quote."*
    Scores extraction accuracy against a small hand-labeled set — this is the
    piece to point to when asked "how do you measure quality?"
 
-## What to say about it in the interview
-
-- **Schema validation + fallback:** `extract.py` validates the model's JSON
-  against a Pydantic schema and retries once with the validation error fed
-  back in; `main.py` routes a still-failing email to a review queue instead
-  of crashing or guessing.
-- **Ranking vs. data problem:** `match.py`'s `CONFIDENCE_THRESHOLD` is exactly
-  the knob the JD mentions — below it, the item goes to `needs_review` rather
-  than being silently mismatched.
-- **Own a number:** `eval.py` is a first pass at "prove it worked" — in a real
-  system this would be a larger golden set with per-field accuracy, logged
-  over time.
-- **Where you'd take it next:** swap SQLite for Postgres, rapidfuzz for a
-  hybrid lexical+embedding search, and add persisted logging of every
-  extraction/match/price decision for observability.
